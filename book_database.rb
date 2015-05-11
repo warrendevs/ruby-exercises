@@ -1,6 +1,17 @@
 class BookDatabase
   def set_books books
     @books = books
+    @authors = authors_from_books @books
+  end
+
+  def authors_from_books all_books
+    authors = {}
+    all_books.each do |author, books|
+      books.each do |book|
+        authors[book] = author
+      end
+    end
+    return authors
   end
 
   def get_books author
@@ -13,6 +24,15 @@ class BookDatabase
       "No such author"
     else
       books.length
+    end
+  end
+
+  def find_author title
+    if @authors[title] == nil
+      "No such book"
+    else
+      # puts @authors[title]
+      return @authors[title]
     end
   end
 
@@ -53,6 +73,15 @@ class BookDatabase
       end
     else
       "No such author"
+    end
+  end
+
+  def print_books
+    @books.each do |author, books|
+      puts "#{author}:"
+      books.each do |book|
+        puts "  #{book}"
+      end
     end
   end
 end
